@@ -7,10 +7,18 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.webhook.aiohttp_server import SimpleRequestHandler, setup_application
 
 import config
+import payments
 from bot import router
 from db import init_db
 
 WEBHOOK_PATH = "/webhook"
+
+
+async def yookassa(request):
+    body = await request.read()
+    signature = request.headers.get("Signature", "")
+    ok = await asyncio.to_thread(payments.process_notification, body, signature)
+    return web.Response(status=200 if ok else 403, text="ok" if ok else "bad signature")
 
 
 async def main():
@@ -25,6 +33,7 @@ async def main():
 
     app = web.Application()
     app.router.add_get("/", lambda r: web.Response(text="ok"))
+    app.router.add_post("/yookassa", yookassa)
     SimpleRequestHandler(dispatcher=dp, bot=bot).register(app, path=WEBHOOK_PATH)
     setup_application(app, dp, bot=bot)
 
