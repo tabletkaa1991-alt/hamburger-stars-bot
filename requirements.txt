@@ -1,4 +1,5 @@
 aiogram>=3.7,<4
 python-dotenv>=1.0
 requests>=2.31
+psycopg2-binary>=2.9
 # pyfragment  — установить после проверки исходника (неофициальная либа)
