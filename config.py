@@ -16,4 +16,4 @@ RETURN_URL = os.getenv("RETURN_URL", "https://t.me/Hamburger_Stars_bot")
 FRAGMENT_SESSION = os.getenv("FRAGMENT_SESSION", "")
 FRAGMENT_PAYMENT = os.getenv("FRAGMENT_PAYMENT", "TON")
 
-DB_PATH = BASE_DIR / "data" / "orders.db"
+DATABASE_URL = os.getenv("DATABASE_URL", "")
